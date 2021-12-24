@@ -1,0 +1,165 @@
+baseurl = "https://MyvNet.com"
+languageCode = "zh-cn"
+theme = "hugo-theme-stack"
+paginate = 5.0
+title = "Kend's blog"
+disqusShortname = "hugo-theme-stack"
+DefaultContentLanguage = "cn"
+hasCJKLanguage = true
+
+[permalinks]
+post = "/p/:slug/"
+page = "/:slug/"
+
+[params]
+mainSections = [
+  "post"
+]
+featuredImageField = "image"
+rssFullContent = true
+
+  [params.footer]
+  since = 2007.0
+
+  [params.dateFormat]
+  published = "2006-01-02"
+  lastUpdated = "2006-01-02 15:04 -0700"
+
+  [params.sidebar]
+  emoji = "🍥"
+  subtitle = "一个很懒的码农."
+
+    [params.sidebar.avatar]
+    enabled = true
+    local = true
+    src = "img/avatar.png"
+
+  [params.article]
+  math = false
+  toc = true
+  readingTime = true
+
+    [params.article.license]
+    enabled = true
+    default = "Licensed under CC BY-NC-SA 4.0"
+
+  [params.comments]
+  enabled = true
+  provider = "disqus"
+
+    [params.comments.disqusjs]
+
+    [params.comments.utterances]
+    issueTerm = "pathname"
+
+    [params.comments.remark42]
+
+    [params.comments.vssue]
+    autoCreateIssue = false
+
+    [params.comments.waline]
+    emoji = [
+      "https://cdn.jsdelivr.net/gh/walinejs/emojis/weibo"
+    ]
+    requiredMeta = [
+      "name",
+      "email",
+      "url"
+    ]
+
+      [params.comments.waline.locale]
+      admin = "Kend"
+
+    [params.comments.twikoo]
+
+    [params.comments.giscus]
+    reactionsEnabled = 1.0
+    emitMetadata = 0.0
+
+    [params.comments.gitalk]
+
+    [params.comments.cusdis]
+
+  [params.widgets]
+  enabled = [
+    "search",
+    "archives",
+    "tag-cloud"
+  ]
+
+    [params.widgets.archives]
+    limit = 5.0
+
+    [params.widgets.tagCloud]
+    limit = 10.0
+
+  [params.opengraph]
+
+    [params.opengraph.twitter]
+    card = "summary_large_image"
+
+  [params.defaultImage]
+
+    [params.defaultImage.opengraph]
+    enabled = false
+    local = false
+
+  [params.colorScheme]
+  toggle = true
+  default = "auto"
+
+  [params.imageProcessing]
+
+    [params.imageProcessing.cover]
+    enabled = true
+
+    [params.imageProcessing.content]
+    enabled = true
+
+[menu]
+
+  [[menu.main]]
+  identifier = "home"
+  name = "首页"
+  url = "/"
+  weight = -100.0
+
+    [menu.main.params]
+    newTab = true
+    icon = "home"
+
+  [[menu.social]]
+  identifier = "github"
+  name = "GitHub"
+  url = "https://github.com/kendling/MyvNet.com"
+
+    [menu.social.params]
+    icon = "brand-github"
+
+[related]
+includeNewer = true
+threshold = 60.0
+toLower = false
+
+  [[related.indices]]
+  name = "tags"
+  weight = 100.0
+
+  [[related.indices]]
+  name = "categories"
+  weight = 200.0
+
+[markup]
+
+  [markup.goldmark]
+
+    [markup.goldmark.renderer]
+    unsafe = false
+
+  [markup.tableOfContents]
+  endLevel = 4.0
+  ordered = true
+  startLevel = 2.0
+
+  [markup.highlight]
+  noClasses = false
