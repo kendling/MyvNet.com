@@ -45,11 +45,12 @@ rssFullContent = true
 
   [params.comments]
   enabled = true
-  provider = "disqus"
+  provider = "utterances"
 
     [params.comments.disqusjs]
 
     [params.comments.utterances]
+    repo = "kendling/MyvNet.com"
     issueTerm = "pathname"
 
     [params.comments.remark42]
@@ -83,8 +84,8 @@ rssFullContent = true
   [params.widgets]
   enabled = [
     "search",
-    "archives",
-    "tag-cloud"
+    "tag-cloud",
+    "archives"
   ]
 
     [params.widgets.archives]
