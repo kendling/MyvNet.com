@@ -4,7 +4,7 @@ theme = "hugo-theme-stack"
 paginate = 5.0
 title = "Kend's blog"
 disqusShortname = "hugo-theme-stack"
-DefaultContentLanguage = "cn"
+DefaultContentLanguage = "zh-cn"
 hasCJKLanguage = true
 
 [permalinks]
