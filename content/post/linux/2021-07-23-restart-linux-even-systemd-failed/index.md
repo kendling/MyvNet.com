@@ -15,6 +15,7 @@ categories: ["Linux"]
 我这里有一个方法可以让你优雅的重启或者关闭系统，只需要有 root shell 就足够了。
 
 方法非常简单，只有 2 句命令：
+
 ```bash
 # 必须在 root shell 运行以下命令
 

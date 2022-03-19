@@ -31,7 +31,7 @@ image: "harmonyos.jpg"
 
 ![新建祼机工程](02-02.png)
 
-### 02.01 打开串口调试
+### 0x02.01 打开串口调试
 
 ![打开串口调试](02-03.png)
 
@@ -73,12 +73,12 @@ image: "harmonyos.jpg"
 /* USER CODE BEGIN Prototypes */
 
 #define UART1_BUFF_SIZE   256 //串口接收缓存区长度
-typedef struct  
+typedef struct
 {  
-  uint8_t  RxFlag;            //空闲接收标记  
-  uint16_t RxLen;             //接收长度  
-  uint8_t  *RxBuff;           //DMA接收缓存  
-} USART_RECEIVETYPE;  
+  uint8_t  RxFlag;            //空闲接收标记
+  uint16_t RxLen;             //接收长度
+  uint8_t  *RxBuff;           //DMA接收缓存
+} USART_RECEIVETYPE;
 
 extern USART_RECEIVETYPE Uart1Rx;
 
@@ -95,31 +95,31 @@ void UART_SendData(USART_TypeDef *uart, uint8_t *buff, uint16_t size);
 /* USER CODE BEGIN 1 */
 
 // 实现串口空闲中断接收开始
-static uint8_t Uar1tRxBuff[UART1_BUFF_SIZE+1]; //定义串口接收buffer
+static uint8_t Uar1tRxBuff[UART1_BUFF_SIZE+1]; // 定义串口接收 buffer
 
 USART_RECEIVETYPE Uart1Rx = {
   .RxBuff = Uar1tRxBuff,
 };
- 
-void USART1_ReceiveIDLE(void)  
-{  
-  uint32_t temp;  
-  if((__HAL_UART_GET_FLAG(&huart1, UART_FLAG_IDLE) != RESET))  
+
+void USART1_ReceiveIDLE(void)
+{
+  uint32_t temp;
+  if((__HAL_UART_GET_FLAG(&huart1, UART_FLAG_IDLE) != RESET))
   {
-    __HAL_UART_CLEAR_FLAG(&huart1, UART_FLAG_IDLE); 
+    __HAL_UART_CLEAR_FLAG(&huart1, UART_FLAG_IDLE);
 
     temp = huart1.Instance->SR;
     temp = huart1.Instance->DR;
 
-    HAL_UART_DMAStop(&huart1);  
+    HAL_UART_DMAStop(&huart1);
 
-    temp = huart1.hdmarx->Instance->CNDTR;  
+    temp = huart1.hdmarx->Instance->CNDTR;
 
-    Uart1Rx.RxLen  = UART1_BUFF_SIZE - temp;   
-    Uart1Rx.RxFlag = 1; 
+    Uart1Rx.RxLen  = UART1_BUFF_SIZE - temp;
+    Uart1Rx.RxFlag = 1;
     Uart1Rx.RxBuff[Uart1Rx.RxLen] = 0;
-    HAL_UART_Receive_DMA(&huart1, Uart1Rx.RxBuff, UART1_BUFF_SIZE);  
-  } 
+    HAL_UART_Receive_DMA(&huart1, Uart1Rx.RxBuff, UART1_BUFF_SIZE);
+  }
 }
 // 实现串口空闲中断接收结束
 
@@ -135,10 +135,10 @@ void USART1_ReceiveIDLE(void)
 
 // 重定向 printf 和 scanf 函数开始
 void UART_SendByte(USART_TypeDef *uart, uint8_t data)
-{     
+{
   uart->DR = data;
   while((uart->SR & UART_FLAG_TXE) == 0);
-  while((uart->SR & UART_FLAG_TC) == 0);       
+  while((uart->SR & UART_FLAG_TC) == 0);
 }
 
 void UART_SendData(USART_TypeDef *uart, uint8_t *buff, uint16_t size)
@@ -149,7 +149,7 @@ void UART_SendData(USART_TypeDef *uart, uint8_t *buff, uint16_t size)
     while((uart->SR&UART_FLAG_TXE)==0);
   }
 
-  while((uart->SR&UART_FLAG_TC)==0);       
+  while((uart->SR&UART_FLAG_TC)==0);
 }
 
 #include <stdio.h>
@@ -161,7 +161,7 @@ int fputc(int ch, FILE *f)
   UART_SendByte(USART1, (uint8_t) ch);
   return (ch);
 }
- 
+
 // 重定向 c 库函数 scanf 到 USART1
 int fgetc(FILE *f)
 {
@@ -175,6 +175,7 @@ int fgetc(FILE *f)
 ```
 
 ### 0x03.03 打开 DMA 接收
+
 修改 `usart.c` 文件中的 `MX_USART1_UART_Init` 函数，在 `USER CODE BEGIN USART1_Init 2` 与 `USER CODE END USART1_Init 2` 之间插入以下代码：
 
 ```C
@@ -215,8 +216,8 @@ void USART1_ReceiveIDLE(void);
       HAL_Delay(500);
       printf("This is output by printf!\r\n");
       if(Uart1Rx.RxFlag){
-          Uart1Rx.RxFlag = 0;
-          UART_SendData(USART1,Uart1Rx.RxBuff,Uart1Rx.RxLen);
+        Uart1Rx.RxFlag = 0;
+        UART_SendData(USART1,Uart1Rx.RxBuff,Uart1Rx.RxLen);
       }
 ```
 
@@ -264,45 +265,45 @@ void USART1_ReceiveIDLE(void);
 
 ```
 Core\LiteOS\kernel\arch\arm\cortex-m3\keil\
-	*.c
-	los_dispatch.S
-	los_exc.S
+    *.c
+    los_dispatch.S
+    los_exc.S
 ```
 
 ![解压源代码](05-04.png)
 
 ```
 Core\LiteOS\kernel\src
-	*.c
+    *.c
 Core\LiteOS\kernel\src\mm
-	*.c
+    *.c
 ```
 
 ![解压源代码](05-05.png)
 
 ```
 Core\LiteOS\components\power
-	*.c
+    *.c
 Core\LiteOS\components\exchook
-	*.c
+    *.c
 ```
 
 ![解压源代码](05-06.png)
 
 ```
 Core\utils_native\base\src
-	memcpy_s.c
-	memset_S.C
-	strcpy_s.c
-	strncpy_s.c
+    memcpy_s.c
+    memset_S.C
+    strcpy_s.c
+    strncpy_s.c
 ```
 
 ![解压源代码](05-07.png)
 
 ```
 Core\LiteOS\utils
-	los_debug.c
-	los_error.c
+    los_debug.c
+    los_error.c
 ```
 
 ![解压源代码](05-08.png)
@@ -413,32 +414,32 @@ UINT32 TX_Task_Handle;
 static UINT32 AppTaskCreate(void)
 {
   UINT32 uwRet = LOS_OK;
-	
-  TSK_INIT_PARAM_S task_init_param;	
 
-	task_init_param.usTaskPrio = 6;
-	task_init_param.pcName = "Task1";
-	task_init_param.pfnTaskEntry = (TSK_ENTRY_FUNC)Task1;
-	task_init_param.uwStackSize = 2048;	
-	uwRet = LOS_TaskCreate(&RX_Task_Handle, &task_init_param);
+  TSK_INIT_PARAM_S task_init_param;    
+
+    task_init_param.usTaskPrio = 6;
+    task_init_param.pcName = "Task1";
+    task_init_param.pfnTaskEntry = (TSK_ENTRY_FUNC)Task1;
+    task_init_param.uwStackSize = 2048;    
+    uwRet = LOS_TaskCreate(&RX_Task_Handle, &task_init_param);
   if (uwRet != LOS_OK)
   {
     printf("Task1 create failed, %X\n", uwRet);
     return uwRet;
   }
-    
-  task_init_param.usTaskPrio = 4;	
-	task_init_param.pcName = "Task2";
-	task_init_param.pfnTaskEntry = (TSK_ENTRY_FUNC)Task2;
-	task_init_param.uwStackSize = 2048;
-	uwRet = LOS_TaskCreate(&TX_Task_Handle, &task_init_param);
+
+  task_init_param.usTaskPrio = 4;    
+  task_init_param.pcName = "Task2";
+  task_init_param.pfnTaskEntry = (TSK_ENTRY_FUNC)Task2;
+  task_init_param.uwStackSize = 2048;
+  uwRet = LOS_TaskCreate(&TX_Task_Handle, &task_init_param);
   if (uwRet != LOS_OK)
   {
     printf("Task2 create failed, %X\n", uwRet);
     return uwRet;
   } 
 
-	return LOS_OK;
+    return LOS_OK;
 }
 
 /* USER CODE END 0 */
@@ -452,10 +453,10 @@ static UINT32 AppTaskCreate(void)
   LOS_KernelInit(); // 初始化 LiteOS-m 内核
   UINT32 uwRet = AppTaskCreate(); // 创建任务
   if(uwRet != LOS_OK) {
-      printf("LOS Creat task failed\r\n");
+    printf("LOS Creat task failed\r\n");
   }
   LOS_Start();      // 启动 LiteOS-m 内核
-	
+
   /* USER CODE END 2 */
 ```
 
@@ -464,7 +465,7 @@ static UINT32 AppTaskCreate(void)
 ​        上面修改后的代码已经可以编译通过，但是你会发现最后链接的时候会报以下错误：
 
 > stm32f103_liteos\stm32f103_liteos.axf: Error: L6406E: No space in execution regions with .ANY selector matching los_memory.o(.bss). 
->
+> 
 > ...
 
 ​        那是因为 `LiteOS` 的代码已经超出祼机工程默认的链接配置了，我们需要使用自定义的链接脚本。
@@ -488,17 +489,17 @@ LR_IROM1 0x08000000 0x00200000  {    ; load region size_region
   }
   RW_IRAM1 0x20000000 0x00200000  {  ; RW data
       * (.data, .bss, .data.init)
-	  * (+RW +ZI)                    ; 增加这行
+      * (+RW +ZI)                    ; 增加这行
   }
     VECTOR 0x20200000 0x400         ; Vector
   {
-	* (.vector)
+    * (.vector)
   }
-  
+
   ARM_LIB_STACKHEAP 0x08100000 EMPTY 0x1000 
   {
-	
-  }	
+
+  }
 }
 ```
 

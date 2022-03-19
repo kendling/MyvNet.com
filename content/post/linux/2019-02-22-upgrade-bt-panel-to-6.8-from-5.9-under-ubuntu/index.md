@@ -32,6 +32,7 @@ PS: 官方也没有说明此脚本不能在 Ubuntu 环境下平滑升级。
 ## 分析问题
 
 `bt restart` 报 gunicorn 启动失败。于是跑了一遍。
+
 ```
 apt update
 apt upgrade

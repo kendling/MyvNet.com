@@ -46,11 +46,11 @@ image: "qt5.png"
 
 首先我们把目录结构创建好：
 
-	C:\Qt
-	  |- 5.11.3
-	  |    |- build_mingw73_64_static # 编译目录
-	  |    |- src # 存放 QT 源码
-	  |- Tools # MinGW 工具安装目录
+    C:\Qt
+      |- 5.11.3
+      |    |- build_mingw73_64_static # 编译目录
+      |    |- src # 存放 QT 源码
+      |- Tools # MinGW 工具安装目录
 
 我选择了 `5.11.3` 版本做静态链接。`32bit` 版本我已经编译过了，本文编译 `64bit` 作为例子。如果你需要编译 `32bit` 版本，需要作相应修改，把所有 `mingw73_64` 改成 `mingw73_32` 。
 
@@ -90,6 +90,7 @@ _例如：`动态链接` 还是 `静态链接`，编译哪些组件等等。_
 详细参数可以参考 `configure.bat --help`
 
 我这里使用以下命令配置 QT 源代码：
+
 ```bash
 configure.bat -static -release -platform win32-g++ -prefix "C:\Qt\5.11.3\mingw73_64_static" -opensource -confirm-license -optimize-size -opengl desktop -qt-zlib -qt-pcre -qt-libpng -qt-libjpeg -qt-freetype -no-openssl -make libs -nomake tools -nomake examples -nomake tests -skip webengine -skip webview -skip qt3d
 ```
@@ -114,6 +115,7 @@ configure.bat -static -release -platform win32-g++ -prefix "C:\Qt\5.11.3\mingw73
 双击上面准备好的 `qt_mingw73_64_static_build_env.bat` 脚本。
 
 输入命令：
+
 ```bash
 cd build_mingw73_64_static
 ..\src\qt-everywhere-src-5.11.3\configure.bat -static -release -platform win32-g++ -prefix "C:\Qt\5.11.3\mingw73_64_static" -opensource -confirm-license -optimize-size -opengl desktop -qt-zlib -qt-pcre -qt-libpng -qt-libjpeg -qt-freetype -no-openssl -make libs -nomake tools -nomake examples -nomake tests -skip webengine -skip webview -skip qt3d
