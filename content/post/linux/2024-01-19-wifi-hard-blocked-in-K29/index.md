@@ -4,7 +4,7 @@ slug: wifi-hard-blocked-in-K29
 date: 2024-01-19T10:43:28+08:00
 tags: [linux"]
 categories: ["Linux"]
-image: "zhaoyang-k29.png"
+image: "zhaoyang-k29.jpg"
 ---
 
 ## 原由
