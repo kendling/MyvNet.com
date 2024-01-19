@@ -1,6 +1,6 @@
 ---
 title: "解决京东京造键盘在 Linux Fx 功能键失效的问题"
-slug: ixed-keychron-keyboards-fx-key-not-work-at-linux
+slug: fixed-keychron-keyboards-fx-key-not-work-at-linux
 date: 2022-02-22T14:35:18+08:00
 tags: [linux"]
 categories: ["Linux"]
